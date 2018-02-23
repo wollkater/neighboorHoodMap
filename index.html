@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+    href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and
+    security.</p>
+<![endif]-->
+
+<div class="d-flex">
+    <div class="menu flex-column px-md-2 px-0 mt-2"
+         data-bind="css: { 'd-flex': showList() == true && showDetails() == false, 'd-md-flex d-none': showList() == false || showDetails() == true}">
+        <div class="row py-3 justify-content-around">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-10">
+                        <input class="input"
+                               data-bind="value: filterString, valueUpdate: 'afterkeydown'">
+                    </div>
+                    <div class="col-1 d-md-none d-sm-block">
+                        <span class="close" data-bind="event:{click: function() {showList(false)}}">X</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="foreach: locations">
+            <div class="row p-3">
+                <div class="col-12 d-flex justify-content-around location"
+                     data-bind="text:name, click: function(){$parent.currentLocation($data), $parent.showDetails(true)}"></div>
+            </div>
+        </div>
+    </div>
+    <i class="searchIcon fas fa-search d-md-none"
+           data-bind="css: { 'd-block': showList() == false && showDetails() == false, 'd-none': showList() == true || showDetails() == true }, event:{click: function() {showList(true)}}"></i>
+    <div id="map" class="map"></div>
+    <div class="menu flex-column px-md-2 px-0 mt-2"
+         data-bind="if: currentLocation() != null, css: { 'd-flex': showDetails() == true, 'd-none': showDetails() == false }">
+        <div class="row justify-content-end p-3">
+            <span class="close" data-bind="event:{click: function() {showDetails(false)}}">X</span>
+        </div>
+        <h1 class="align-self-center text-center" data-bind="text: currentLocation().name"></h1>
+        <div class="align-self-center">
+                    <span data-bind="foreach:currentLocation().filledStars">
+                        <span>★</span>
+                    </span>
+            <span class="emptyStars" data-bind="foreach:currentLocation().emptyStars">
+                        <span>☆</span>
+                    </span>
+        </div>
+        <h2 class="align-self-center mt-3">Reviews</h2>
+        <div class="col-12" data-bind="foreach: currentLocation().reviews">
+            <div class="row py-2 px-3">
+                <p class="" data-bind="text: $data.text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="js/vendor/knockout-3.4.2.js"></script>
+<script src="js/vendor/jquery-3.2.1.min.js"></script>
+<script src="api/maps"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
