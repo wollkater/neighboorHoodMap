@@ -35,7 +35,7 @@ function MapViewModel() {
              url: `/api/yelp/businesses/search?term=food&latitude=${muenster.lat}&longitude=${muenster.lng}`,
              success: onBusinessesReceived,
              error: () => onError("Couldn't fetch businesses")
-                })
+                });
     }
 
     //Success handler for businesses
@@ -47,8 +47,8 @@ function MapViewModel() {
                            url: `/api/yelp/businesses/${business.id}/reviews`,
                            success: (reviews) => onReviewsReceived(business, reviews),
                            error: () => onError(`Couldn't fetch reviews for ${business.name}`)
-                       })
-            })
+                       });
+            });
         }
     }
 
@@ -58,18 +58,18 @@ function MapViewModel() {
         const latLng = {lat:business.coordinates.latitude, lng:business.coordinates.longitude};
         placeArray.push(new Place(business.name, latLng, business.rating, reviews.reviews));
 
-        initMarker(map, placeArray)
+        initMarker(map, placeArray);
     }
 
     function onError(message) {
-        alert(message)
+        alert(message);
     }
 
     function initMarker(map, places) {
         //Clear markers
         markers.forEach(marker => {
-            marker.setMap(null)
-        })
+            marker.setMap(null);
+        });
 
         self.locations(places);
         self.currentLocation(places[0]);
@@ -84,21 +84,21 @@ function MapViewModel() {
             marker.addListener("click", event => {
                 self.currentLocation(place);
                 self.showDetails(true);
-                marker.setAnimation(google.maps.Animation.BOUNCE)
-                setTimeout(() => marker.setAnimation(null), 1000)
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(() => marker.setAnimation(null), 1000);
             });
             markers.push(marker);
-        })
+        });
     }
 
     initMap();
 
     //Simple name filter
     self.filterPlaces = (input) => {
-        const places = placeArray.filter(value => {return value.name.toLowerCase().includes(input.toLowerCase())});
+        const places = placeArray.filter(value => {return value.name.toLowerCase().includes(input.toLowerCase());});
         self.locations(places);
-        initMarker(map, places)
-    }
+        initMarker(map, places);
+    };
 
 
 }
