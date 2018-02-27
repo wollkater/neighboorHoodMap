@@ -1,6 +1,6 @@
 # Installation
 
-Clone the repo to your local computer.
+Clone the repo to your local computer. You also need API keys for <a href="https://www.yelp.com/fusion">Yelp</a> and <a href="https://console.developers.google.com">Google Maps</a>.
 
 ## Nginx
 I used a Nginx proxy to keep the Google and Yelp API keys secret. You can get Nginx <a href='https://nginx.org/en/docs/install.html'>here</a>.
