@@ -1,27 +1,14 @@
+# Prerequisites 
+* Docker
+* Yelp and Google Maps API keys
+
 # Installation
 
 Clone the repo to your local computer. You also need API keys for <a href="https://www.yelp.com/fusion">Yelp</a> and <a href="https://console.developers.google.com">Google Maps</a>.
 
-## Nginx
-I used a Nginx proxy to keep the Google and Yelp API keys secret. You can get Nginx <a href='https://nginx.org/en/docs/install.html'>here</a>.
-Paste the following config into your Nginx config.
+# Run
 
-    server {
-        listen       80;
-        server_name  localhost;
-    
-        location / {
-           root PATH_TO_CLONED_FOLDER; #eg /home/user/map
-         }
-         location /api/yelp {
-          proxy_pass https://api.yelp.com/v3;
-          proxy_set_header Authorization 'Bearer YOUR_API_KEY';
-         }
-         location /api/maps {
-          proxy_pass https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY;
-         }
-    
-    }
-Then reload your Nginx config with _nginx -s reload_ (or start it with nginx).
+First put your API keys into the nginx.conf file. After that you can build the docker image 
+with _docker build -t map ._ and run the container with _docker run --name map -d -p 8080:80 map_.
+You can access the website now under http://localhost:8080.
 
-Now you can open your browser and visit http://localhost and checkout the website.
