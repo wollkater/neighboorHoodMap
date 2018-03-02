@@ -49,7 +49,7 @@ function MapViewModel() {
 						   async: false, //if we make it async, we exceed the request per second limit
 						   success: (reviews) => onReviewsReceived(business, reviews),
 						   error: () => onError(`Couldn't fetch reviews for ${business.name}`)
-					   })
+					   });
             });
 			self.loading(false);
         }
