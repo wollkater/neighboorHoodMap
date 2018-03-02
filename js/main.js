@@ -16,6 +16,7 @@ function MapViewModel() {
     let placeArray = [];
     let map;
     let markers = []; //Array that holds markers so we can clear them later
+    self.loading = ko.observable(true);
     self.filterString = ko.observable("");
     self.currentLocation = ko.observable(null);
     self.locations = ko.observableArray(placeArray);
@@ -43,12 +44,14 @@ function MapViewModel() {
         if(data.businesses) {
             //load reviews for all businesses
             data.businesses.forEach(business => {
-                $.ajax({
-                           url: `/api/yelp/businesses/${business.id}/reviews`,
-                           success: (reviews) => onReviewsReceived(business, reviews),
-                           error: () => onError(`Couldn't fetch reviews for ${business.name}`)
-                       });
+				$.ajax({
+						   url: `/api/yelp/businesses/${business.id}/reviews`,
+						   async: false, //if we make it async, we exceed the request per second limit
+						   success: (reviews) => onReviewsReceived(business, reviews),
+						   error: () => onError(`Couldn't fetch reviews for ${business.name}`)
+					   })
             });
+			self.loading(false);
         }
     }
 

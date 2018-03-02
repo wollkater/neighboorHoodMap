@@ -154,6 +154,11 @@ input {
     height: 100%;
 }
 
+.loading {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
 @media (max-width:768px){
     .menu {
         min-width: 100vw;
