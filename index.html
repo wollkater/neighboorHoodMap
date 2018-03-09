@@ -21,13 +21,6 @@
     href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and
     security.</p>
 <![endif]-->
-<div data-bind="if: loading()">
-    <div class="align-items-center d-flex justify-content-center loading" >
-        <h1><i class="fa fa-spinner fa-spin"></i></h1>
-        <h1>Loading reviews</h1>
-    </div>
-</div>
-
 <div class="d-flex">
     <div class="menu flex-column px-md-2 px-0 mt-2"
          data-bind="css: { 'd-flex': showList() == true && showDetails() == false, 'd-md-flex d-none': showList() == false || showDetails() == true}">
@@ -47,7 +40,7 @@
         <div data-bind="foreach: locations">
             <div class="row p-3">
                 <div class="col-12 d-flex justify-content-around location"
-                     data-bind="text:name, click: function(){$parent.currentLocation($data), $parent.showDetails(true)}"></div>
+                     data-bind="text:name, click: function(){$parent.openReviews($data)}"></div>
             </div>
         </div>
     </div>
@@ -56,6 +49,12 @@
     <div id="map" class="map"></div>
     <div class="menu flex-column px-md-2 px-0 mt-2"
          data-bind="if: currentLocation() != null, css: { 'd-flex': showDetails() == true, 'd-none': showDetails() == false }">
+        <div data-bind="if: loading()">
+            <div class="align-items-center d-flex justify-content-center loading" >
+                <h1><i class="fa fa-spinner fa-spin"></i></h1>
+                <h1>Loading reviews</h1>
+            </div>
+        </div>
         <div class="row justify-content-end p-3">
             <span class="close" data-bind="event:{click: function() {showDetails(false)}}">X</span>
         </div>
@@ -79,7 +78,7 @@
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/vendor/knockout-3.4.2.js"></script>
 <script src="js/vendor/jquery-3.2.1.min.js"></script>
-<script src="api/maps"></script>
+<script async onload="initMap()" onerror="onError('Couldn\'t load Google Maps API')" src="api/maps"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
